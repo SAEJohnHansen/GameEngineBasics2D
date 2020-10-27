@@ -6,11 +6,14 @@ public class EnemyBehavior : MonoBehaviour
 {
     [Header("Enemy Variables")]
     public float Speed;
+    [SerializeField] private int damage;
+
     [Header("Checks")]
     public LayerMask GroundLayer;
     public float EdgeCheckRadius;
     public Transform EdgeCheckPos;
     public Transform WallCheckPos;
+
     public enum MovementType { wall, edge, both }
     [Tooltip("Toggle accordingly to let the enemy check for walls, edges or both")]
     public MovementType type;
@@ -70,6 +73,14 @@ public class EnemyBehavior : MonoBehaviour
             transform.Translate(-transform.right * Speed * Time.fixedDeltaTime);
         }
 
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.transform.CompareTag("Player"))
+        {
+            collision.transform.GetComponent<PlayerHealth>().TakeDamage(damage);
+        }
     }
 
     /// <summary>

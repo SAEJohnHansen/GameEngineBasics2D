@@ -29,5 +29,6 @@ public class TestingCollisions : MonoBehaviour
     private void OnCollisionStay2D(Collision2D collision)
     {
         Debug.Log(collision.gameObject.name + " is on my personal space");
+
     }
 }

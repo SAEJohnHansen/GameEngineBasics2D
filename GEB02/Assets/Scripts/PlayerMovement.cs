@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Components")]
     public Rigidbody2D Rb;
+    public SpriteRenderer SpRend;
 
     [Header("GroundCheck")]
     public float GroundCheckRadius;
@@ -25,6 +26,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
+        SpRend = GetComponent<SpriteRenderer>();
         startPos = transform.position;
     }
 
@@ -37,6 +39,8 @@ public class PlayerMovement : MonoBehaviour
         {
             Jump();
         }
+
+        FlipCharacter();
     }
 
     private void FixedUpdate()
@@ -56,6 +60,18 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
+    private void FlipCharacter()
+    {
+        if (xAxis > 0.1f)
+        {
+            SpRend.flipX = false;
+        }
+        if (xAxis < -0.1f)
+        {
+            SpRend.flipX = true;
+        }
+    }
+
     public void Jump()
     {
         Rb.velocity = new Vector2(Rb.velocity.x, 0);
@@ -69,31 +85,8 @@ public class PlayerMovement : MonoBehaviour
     /// <returns></returns>
     private bool GroundCheck()
     {
-        bool result = Physics2D.OverlapCircle(GroundCheckPos.position, GroundCheckRadius, GroundLayer) && Rb.velocity.y <= 0;
+        bool result = Physics2D.OverlapCircle(GroundCheckPos.position, GroundCheckRadius, GroundLayer) && Rb.velocity.y <= 1;
         return result;
-    }
-
-
-
-    /// <summary>
-    /// Reset player to starting position
-    /// </summary>
-    public void Death()
-    {
-        transform.position = startPos;
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        //if (collision.gameObject.CompareTag("Ground")) // Old Groundcheck
-        //{
-        //    isGrounded = true;
-        //}
-
-        if (collision.gameObject.CompareTag("Ouch"))
-        {
-            Death();
-        }
     }
 
     private void OnDrawGizmos()
