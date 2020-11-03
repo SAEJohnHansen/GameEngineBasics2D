@@ -13,9 +13,12 @@ GameObject:
   - component: {fileID: 275391698965574651}
   - component: {fileID: 275391698965574648}
   - component: {fileID: 275391698965574649}
+  - component: {fileID: 2084450032}
+  - component: {fileID: 2084450033}
+  - component: {fileID: 2084450034}
   m_Layer: 9
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -145,17 +148,68 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8122eecb141d254ea8f2b4542e882e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  settings: {fileID: 11400000, guid: 03c3e44034ad5b64bbc524e4cafc3ca0, type: 2}
   Speed: 350
   AirControl: 6
-  JumpPower: 8
+  JumpPower: 6
   Rb: {fileID: 275391698965574651}
-  spRend: {fileID: 0}
+  SpRend: {fileID: 275391698965574650}
+  Anim: {fileID: 2084450034}
   GroundCheckRadius: 0.23
   GroundLayer:
     serializedVersion: 2
     m_Bits: 256
   GroundCheckPos: {fileID: 275391699787402360}
   isGrounded: 0
+--- !u!114 &2084450032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 275391698965574654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fd6fb0e587ba2e4fa6822dfbfea0f1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CubePrefab: {fileID: 3732183539138128170, guid: d5208593d7204364fbefa9d32be34076,
+    type: 3}
+  ShootPower: 5
+  MaxAmountOfCubes: 3
+--- !u!114 &2084450033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 275391698965574654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0562a358478fff42bf8a122474dfce9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 3
+  invicibilityTimer: 0
+--- !u!95 &2084450034
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 275391698965574654}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4dc435c047d3c0343b18b567396938b8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &275391699787402361
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,12 +5,13 @@ using UnityEngine;
 public class PlayerHealth : MonoBehaviour
 {
     [SerializeField] private int health;
-    private Vector3 startPos;
+    //private Vector3 startPos;
     private bool isInvincible = false;
     [SerializeField] private float invicibilityTimer;
     private void Start()
     {
-        startPos = transform.position;
+        //startPos = transform.position;
+        health = GameManager.instance.CurrentPlayerHealth;
     }
 
     /// <summary>
@@ -24,6 +25,7 @@ public class PlayerHealth : MonoBehaviour
             health -= value;
             isInvincible = true;
             Invoke("StopInvincibility", invicibilityTimer);
+            GameManager.instance.CurrentPlayerHealth = health;
         }
         if (health <= 0)
         {
@@ -38,6 +40,8 @@ public class PlayerHealth : MonoBehaviour
 
     private void Death()
     {
-        transform.position = startPos;
+        //transform.position = startPos;
+        GameManager.instance.CurrentPlayerHealth = 3;
+        GameManager.instance.ReloadScene();
     }
 }

@@ -77,7 +77,7 @@ public class TimerTesting : MonoBehaviour
 
         for (int i = 0; i < enemies.Length; i++)
         {
-            Debug.Log(enemies[i].name + " is in range");
+            //Debug.Log(enemies[i].name + " is in range");
         }
     }
 

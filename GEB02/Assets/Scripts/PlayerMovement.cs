@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Player Variables")]
+    public PlayerSettings settings;
     public float Speed;
     public float AirControl;
     public float JumpPower;
@@ -12,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Components")]
     public Rigidbody2D Rb;
     public SpriteRenderer SpRend;
+    public Animator Anim;
 
     [Header("GroundCheck")]
     public float GroundCheckRadius;
@@ -22,7 +24,12 @@ public class PlayerMovement : MonoBehaviour
     public bool isGrounded;
     private Vector2 startPos;
 
-
+    private void Awake()
+    {
+        Speed = settings.speed;
+        AirControl = settings.airControl;
+        JumpPower = settings.jumpPower;
+    }
 
     private void Start()
     {
@@ -34,6 +41,8 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         xAxis = Input.GetAxis("Horizontal");
+        Anim.SetFloat("Speed", Mathf.Abs(xAxis));
+        Anim.SetFloat("YVelocity", Rb.velocity.y);
 
         if (Input.GetButtonDown("Jump") && isGrounded) // Jump Input and Check if we can jump
         {
@@ -51,7 +60,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (isGrounded)
         {
-            Rb.velocity = new Vector2(xAxis * Speed * Time.fixedDeltaTime, Rb.velocity.y); 
+            Rb.velocity = new Vector2(xAxis * Speed * Time.fixedDeltaTime, Rb.velocity.y);
         }
         else
         {
