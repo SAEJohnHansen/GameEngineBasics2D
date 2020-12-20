@@ -14,11 +14,16 @@ public class PlayerMovement : MonoBehaviour
     public Rigidbody2D Rb;
     public SpriteRenderer SpRend;
     public Animator Anim;
+    public AudioClip[] JumpSounds;
+    public AudioClip[] FootStepSounds;
+    private AudioSource source;
 
     [Header("GroundCheck")]
     public float GroundCheckRadius;
     public LayerMask GroundLayer;
     public Transform GroundCheckPos;
+
+    public GameObject PauseMenu;
 
     private float xAxis;
     public bool isGrounded;
@@ -33,6 +38,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
+        source = GetComponent<AudioSource>();
         SpRend = GetComponent<SpriteRenderer>();
         startPos = transform.position;
     }
@@ -47,9 +53,16 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetButtonDown("Jump") && isGrounded) // Jump Input and Check if we can jump
         {
             Jump();
+            source.PlayOneShot(JumpSounds[Random.Range(0, JumpSounds.Length)]);
         }
 
+        if (Input.GetKeyDown(KeyCode.Escape))// Toggle Pause Menu
+        {
+            PauseMenu.SetActive(!PauseMenu.activeSelf);
+            Time.timeScale = PauseMenu.activeSelf ? 0 : 1;
+        }
         FlipCharacter();
+
     }
 
     private void FixedUpdate()
@@ -57,7 +70,6 @@ public class PlayerMovement : MonoBehaviour
         isGrounded = GroundCheck();
 
         Vector3 direction = new Vector3(xAxis, 0, 0);
-
         if (isGrounded)
         {
             Rb.velocity = new Vector2(xAxis * Speed * Time.fixedDeltaTime, Rb.velocity.y);
@@ -66,7 +78,6 @@ public class PlayerMovement : MonoBehaviour
         {
             Rb.velocity = Vector2.Lerp(Rb.velocity, new Vector2(xAxis * Speed * Time.fixedDeltaTime, Rb.velocity.y), AirControl * Time.fixedDeltaTime);
         }
-
     }
 
     private void FlipCharacter()
@@ -98,6 +109,10 @@ public class PlayerMovement : MonoBehaviour
         return result;
     }
 
+    public void PlayFootStepSound()
+    {
+        source.PlayOneShot(FootStepSounds[Random.Range(0,FootStepSounds.Length)]);
+    }
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
